@@ -139,7 +139,7 @@
 <body>
     <div class="container">
         <h1>TikTok Comments Viewer</h1>
-        <p class="text-center">Upload your TikTok JSON data file to view your comments activity. [We do not save any information or files here, check source code ctrl + u if you are skeptical] (Made entirely by AI)</p>
+        <p class="text-center">Upload your TikTok JSON data file to view your comments activity. (Does not work on mobile for now) [Information & files will not be saved.]</p>
         <div class="mb-3">
             <input type="file" id="fileInput" class="form-control">
         </div>
@@ -164,8 +164,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
     reader.onload = function() {
         try {
             const data = JSON.parse(reader.result);
-            
-            // More flexible parsing of different possible JSON structures
+
             if (data.Comment?.Comments?.CommentsList) {
                 comments = data.Comment.Comments.CommentsList;
             } else if (Array.isArray(data)) {
@@ -193,7 +192,6 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 });
 
 document.getElementById('searchInput').addEventListener('keyup', function(event) {
-    // Add search on Enter key press
     if (event.key === 'Enter') {
         performSearch();
     }
@@ -205,7 +203,6 @@ function performSearch() {
     const query = document.getElementById('searchInput').value.toLowerCase().trim();
     
     const filteredComments = comments.filter(comment => {
-        // More robust comment text checking
         const commentText = comment.text || comment.comment || comment.content || '';
         return commentText.toLowerCase().includes(query);
     });
